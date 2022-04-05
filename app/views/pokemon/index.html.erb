@@ -1,2 +1,24 @@
 <h1>Pokemon#index</h1>
 <p>Find me in app/views/pokemon/index.html.erb</p>
+
+ <table>
+  <tr>
+    <th>Name</th>
+    <th>Image</th>
+    <th>Base XP</th>
+    <th>Height</th>
+    <th>Weight</th>
+    <th>BuyBtn</th>
+  </tr>
+
+  <% @pokemons.each do |pokemon| %>
+    <tr>
+        <td><%= pokemon.name %></td>
+        <td><img src="<%= pokemon.image %>" alt="<%= pokemon.name %>" width="60" height="60"></td>
+        <td><%= pokemon.base_experience %></td>
+        <td><%= pokemon.height %></td>
+        <td><%= pokemon.weight %></td>
+        <td><%= link_to "Buy for #{pokemon.price}", pokemon_show_path(pokemon.id)%></td>
+    </tr>
+  <% end %>
+</table>
