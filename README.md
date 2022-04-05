@@ -24,6 +24,7 @@ Exchange to trade pokémon as NFTs
  - Register a transaction with a BUY operation
 
 #### Registering a Sell (to the exchange):
+ - Check if user really own that Pokemon
  - Change the pokemon owner
  - Change the last_sell_price
  - Add to from user balance
