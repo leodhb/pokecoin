@@ -1,3 +1,4 @@
 class Pokemon < ApplicationRecord
-    belongs_to :users
+    belongs_to :user
+    has_many :transactions
 end
