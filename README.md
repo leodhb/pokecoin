@@ -13,7 +13,7 @@ Exchange to trade pokémon as NFTs
 | [POST]   | /pokemon/:id/sell     | Validates and transact a valid sale     |
 | [GET]    | /me                   | Displays the logged in user account     |
 | [GET]    | /me/add               | Shows a screen to add money to wallet   |
-| [POST]   | /me/add               | Adds money to the wallet                |
+| [PATCH]  | /me/add               | Adds money to the wallet                |
 | [GET]    | /me/transactions      | Shows all user transactions             |
 
 #### Registering a Buy (from the exchange):
