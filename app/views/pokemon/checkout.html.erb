@@ -1,2 +1,13 @@
 <h1>Pokemon#checkout</h1>
 <p>Find me in app/views/pokemon/checkout.html.erb</p>
+
+<h3><%= @pokemon.name %>'s Checkout</h3>
+<img src="<%= @pokemon.image %>" alt="<%= @pokemon.name %>" width="160" height="160">
+<p>Base Experience: <%= @pokemon.base_experience %></p>
+<p>Height: <%= @pokemon.height %></p>
+<p>Weight: <%= @pokemon.weight %></p>
+<hr>
+<p><%= @pokemon.name %>'s price': <%= @pokemon.price %></p>
+<p>Bitcoin Price Today: <%= @btc_price %></p>
+
+<p><%= link_to "Buy for USD #{@price_in_usd.round(2)}", pokemon_show_path(@pokemon.id)%></p>
