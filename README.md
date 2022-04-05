@@ -28,3 +28,6 @@ Exchange to trade pokémon as NFTs
  - Change the last_sell_price
  - Add to from user balance
  - Register a transaction with a SELL operation
+
+## ERD Diagram
+![QuickDBD-Free Diagram](https://user-images.githubusercontent.com/24739860/161654566-2c97b19f-7f3f-440d-b1e5-1409e13ae29b.png)
