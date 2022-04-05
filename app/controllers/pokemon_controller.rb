@@ -1,4 +1,5 @@
 class PokemonController < ApplicationController
+
   def index
     @pokemons = Pokemon.all
   end
@@ -10,6 +11,8 @@ class PokemonController < ApplicationController
   def checkout
     @pokemon = Pokemon.find(params[:id])
     @price_in_usd, @btc_price = btc_to_usd(@pokemon.price)
+
+    redirect_to pokemon_show_path if pokemon_from_logged_user?(@pokemon) 
   end
 
   def buy
@@ -27,5 +30,9 @@ class PokemonController < ApplicationController
       btc_price * pokemon_price,
       btc_price
     ]
+  end
+
+  def pokemon_from_logged_user?(pokemon)
+    pokemon.user == current_user
   end
 end
