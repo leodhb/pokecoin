@@ -63,17 +63,6 @@ class PokemonController < ApplicationController
   end
 
   def fetch_bitcoin_price
-    @price_in_usd, @btc_price = btc_to_usd(@pokemon.price)
-  end
-
-  def btc_to_usd(pokemon_price)
-    url = "https://api.blockchain.com/v3/exchange/tickers/BTC-USD"
-
-    btc_price = JSON.parse(RestClient.get(url))['price_24h'].to_f
-
-    [
-      (btc_price * pokemon_price).round(2),
-      btc_price
-    ]
+    @price_in_usd, @btc_price = TickerService.new(pokemon_price: @pokemon.price).call
   end
 end
