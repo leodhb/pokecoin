@@ -8,4 +8,8 @@ class ApplicationController < ActionController::Base
             password: "singleteste"
         ).first_or_create
     end
+
+    def pokemon_from_logged_user?
+        @pokemon.user.id == current_user.id
+    end
 end
