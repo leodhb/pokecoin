@@ -1,25 +1,21 @@
 class PokemonController < ApplicationController
   before_action :fetch_pokemon, only: [:show, :checkout, :sell, :buy]
+  before_action :fetch_bitcoin_price, only: [:checkout, :buy, :sell]
 
   def index
-    @pokemons = Pokemon.all
+    @pokemons = Pokemon.where(user_id: exchange_user.id).all
   end
 
   def show; end
 
   def checkout
-    redirect_to pokemon_show_path(params[:id]) if pokemon_from_logged_user?
-    @price_in_usd, @btc_price = btc_to_usd(@pokemon.price)
+    redirect_to pokemon_show_path if pokemon_from_logged_user?
   end
 
   def buy
-    redirect_to pokemon_show_path(params[:id]) if pokemon_from_logged_user?
-
-    @price_in_usd, @btc_price = btc_to_usd(@pokemon.price)
+    redirect_to pokemon_show_path if pokemon_from_logged_user?
     handle_insufficient_amount if current_user.balance < @price_in_usd
 
-
-    #transaction
     handle_transaction(Transaction::OPERATIONS[:buy])
 
     #do a flash success here later
@@ -27,26 +23,32 @@ class PokemonController < ApplicationController
   end
   
   def sell
-  end
+    redirect_to pokemon_show_path unless pokemon_from_logged_user?
+    
+    handle_transaction(Transaction::OPERATIONS[:sell])
 
-  def fetch_pokemon
-    @pokemon = Pokemon.find(params[:id])
+    #do a flash success here later
+    redirect_to root_path
   end
 
   def handle_transaction(operation)
-    @price_in_usd = -@price_in_usd if operation == Transaction::OPERATIONS[:buy]
+    user_id = exchange_user.id
 
-    user_id = current_user.id if operation == Transaction::OPERATIONS[:buy] else 1
+    if Transaction::OPERATIONS[:buy].equal?(operation)
+      @price_in_usd = -@price_in_usd
+      user_id = current_user.id
+    end
 
     User.transaction do
-      @user = User.find(current_user.id)
+      @user = User.find(user_id)
       @user.update(balance: @user.balance + @price_in_usd)
       @pokemon.update(user_id: @user.id, last_sell_price: @price_in_usd)
 
       Transaction.new(
         action: operation[:action],
         user_id: @user.id,
-        pokemon_id: @pokemon.id
+        pokemon_id: @pokemon.id,
+        amount: @price_in_usd
       ).save!
     end
   end
@@ -54,6 +56,14 @@ class PokemonController < ApplicationController
   def handle_insufficient_amount
     flash[:error] = "You don't have USD #{@price_in_usd} to buy this."
     redirect_to pokemon_checkout_path
+  end
+
+  def fetch_pokemon
+    @pokemon = Pokemon.find(params[:id])
+  end
+
+  def fetch_bitcoin_price
+    @price_in_usd, @btc_price = btc_to_usd(@pokemon.price)
   end
 
   def btc_to_usd(pokemon_price)
