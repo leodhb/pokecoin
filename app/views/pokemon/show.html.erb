@@ -7,4 +7,9 @@
 <p>Base Experience: <%= @pokemon.base_experience %></p>
 <p>Height: <%= @pokemon.height %></p>
 <p>Weight: <%= @pokemon.weight %></p>
-<p><%= link_to "Buy for #{@pokemon.price}", pokemon_checkout_path(@pokemon.id)%></p>
+
+<% if pokemon_from_logged_user? %>
+    <p><%= link_to "Sell for USD #{@price_in_usd}", pokemon_checkout_path(@pokemon.id)%></p>
+<% else %>
+    <p><%= link_to "Buy for BTC #{@pokemon.price}", pokemon_checkout_path(@pokemon.id)%></p>
+<% end %>
