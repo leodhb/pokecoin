@@ -1,2 +1,8 @@
 <h1>User#add</h1>
 <p>Find me in app/views/user/add.html.erb</p>
+
+<%= form_tag(user_store_money_path, method: "patch") do %>
+  <%= label_tag(:amount, "Please tell how much you want to deposit (0 to 10.000 USD):") %>
+  <%= number_field(:amount, in: 0..10_000.00, step: 0.5) %>
+  <%= submit_tag("Deposit") %>
+<% end %>
