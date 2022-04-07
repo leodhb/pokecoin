@@ -1,2 +1,15 @@
 <h1>Pokemon#show</h1>
 <p>Find me in app/views/pokemon/show.html.erb</p>
+
+<h3><%= @pokemon.name %></h3>
+<p>Owner: <%= @pokemon.user.full_name %></p>
+<img src="<%= @pokemon.image %>" alt="<%= @pokemon.name %>" width="160" height="160">
+<p>Base Experience: <%= @pokemon.base_experience %></p>
+<p>Height: <%= @pokemon.height %></p>
+<p>Weight: <%= @pokemon.weight %></p>
+
+<% if pokemon_from_logged_user? %>
+    <p><%= link_to "Sell for USD #{@price_in_usd}", pokemon_checkout_path(@pokemon.id)%></p>
+<% else %>
+    <p><%= link_to "Buy for BTC #{@pokemon.price}", pokemon_checkout_path(@pokemon.id)%></p>
+<% end %>

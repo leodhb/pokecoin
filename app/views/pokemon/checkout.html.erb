@@ -1,2 +1,24 @@
 <h1>Pokemon#checkout</h1>
 <p>Find me in app/views/pokemon/checkout.html.erb</p>
+
+<h3><%= @pokemon.name %>'s Checkout</h3>
+<img src="<%= @pokemon.image %>" alt="<%= @pokemon.name %>" width="160" height="160">
+<p>Base Experience: <%= @pokemon.base_experience %></p>
+<p>Height: <%= @pokemon.height %></p>
+<p>Weight: <%= @pokemon.weight %></p>
+<hr>
+<p><%= @pokemon.name %>'s price': <%= @pokemon.price %></p>
+<p>Bitcoin Price Today: <%= @btc_price %></p>
+
+<% flash.each do |type, msg| %>
+  <div>
+    <%= msg %>
+  </div>
+<% end %>
+
+<% if pokemon_from_logged_user? %>
+    <p><%= button_to "Sell for USD #{@price_in_usd.round(2)}", pokemon_sell_path(@pokemon.id) %></p>
+<% else %>
+    <p><%= button_to "Buy for USD #{@price_in_usd.round(2)}", pokemon_buy_path(@pokemon.id) %></p>
+<% end %>
+
