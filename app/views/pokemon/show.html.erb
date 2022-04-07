@@ -8,7 +8,9 @@
 <p>Height: <%= @pokemon.height %></p>
 <p>Weight: <%= @pokemon.weight %></p>
 
-<% if pokemon_from_logged_user? %>
+<% if current_user.balance < @price_in_usd and not pokemon_from_logged_user? %>
+    <p><%= link_to "You don't have USD #{@price_in_usd} in your wallet", '#' %></p>
+<% elsif pokemon_from_logged_user? %>
     <p><%= link_to "Sell for USD #{@price_in_usd}", pokemon_checkout_path(@pokemon.id)%></p>
 <% else %>
     <p><%= link_to "Buy for BTC #{@pokemon.price}", pokemon_checkout_path(@pokemon.id)%></p>

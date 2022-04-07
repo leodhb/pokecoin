@@ -12,9 +12,9 @@ class PokemonController < ApplicationController
   def checkout; end
 
   def buy
-    redirect_to pokemon_show_path if pokemon_from_logged_user?
-
     handle_insufficient_amount if current_user.balance < @price_in_usd
+
+    redirect_to pokemon_show_path if pokemon_from_logged_user?
 
     handle_transaction(Transaction::OPERATIONS[:buy])
 
@@ -32,17 +32,17 @@ class PokemonController < ApplicationController
   end
 
   def handle_transaction(operation)
-    user_id = exchange_user.id
+    buyer_id = exchange_user.id
 
     if Transaction::OPERATIONS[:buy].equal?(operation)
       @price_in_usd = -@price_in_usd
-      user_id = current_user.id
+      buyer_id = current_user.id
     end
 
     User.transaction do
-      @user = User.find(user_id)
+      @user = User.find(current_user.id)
       @user.update(balance: @user.balance + @price_in_usd)
-      @pokemon.update(user_id: @user.id, last_sell_price: @price_in_usd)
+      @pokemon.update(user_id: buyer_id, last_sell_price: @price_in_usd)
 
       Transaction.new(
         action: operation[:action],
