@@ -1,6 +1,6 @@
 class PokemonController < ApplicationController
   before_action :fetch_pokemon, only: [:show, :checkout, :sell, :buy]
-  before_action :fetch_bitcoin_price, only: [:checkout, :buy, :sell]
+  before_action :fetch_bitcoin_price, only: [:show, :checkout, :buy, :sell]
 
   def index
     @pokemons = Pokemon.where(user_id: exchange_user.id).all
@@ -8,12 +8,11 @@ class PokemonController < ApplicationController
 
   def show; end
 
-  def checkout
-    redirect_to pokemon_show_path if pokemon_from_logged_user?
-  end
+  def checkout; end
 
   def buy
     redirect_to pokemon_show_path if pokemon_from_logged_user?
+
     handle_insufficient_amount if current_user.balance < @price_in_usd
 
     handle_transaction(Transaction::OPERATIONS[:buy])
@@ -46,7 +45,7 @@ class PokemonController < ApplicationController
 
       Transaction.new(
         action: operation[:action],
-        user_id: @user.id,
+        user_id: current_user.id,
         pokemon_id: @pokemon.id,
         amount: @price_in_usd
       ).save!
