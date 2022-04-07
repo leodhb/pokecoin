@@ -1,0 +1,7 @@
+div.pokecard {
+    border-radius: 0 !important;
+    border: solid 2px black;
+    background-color: aqua;
+    border-top-left-radius: 50px !important;
+    border-bottom-right-radius: 50px !important;
+}
