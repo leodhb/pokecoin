@@ -1,4 +1,6 @@
 class UserController < ApplicationController
+  before_action :fetch_user
+
   def index
   end
 
@@ -9,5 +11,9 @@ class UserController < ApplicationController
   end
 
   def transactions
+  end
+
+  def fetch_user
+    @user = User.find(current_user.id)
   end
 end
