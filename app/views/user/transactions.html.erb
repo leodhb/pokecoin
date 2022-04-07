@@ -1,2 +1,24 @@
 <h1>User#transactions</h1>
 <p>Find me in app/views/user/transactions.html.erb</p>
+
+<hr>
+<h1><%= @user.full_name %>'s Transactions</h1>
+<table>
+    <tr>
+        <th>Pokemon</th>
+        <th>Amount (USD)</th>
+        <th>Operation</th>
+        <th>Date</th>
+    </tr>
+
+    <% @user.transactions.each do |transaction| %>
+        <tr>
+            <td><%= transaction.pokemon.name %></td>
+            <td><%= transaction.amount %></td>
+            <td><%= transaction.action %></td>
+            <td><%= transaction.created_at.to_s %></td>
+        </tr>
+    <% end %>
+</table>
+
+<%= link_to 'Back', :back %>
