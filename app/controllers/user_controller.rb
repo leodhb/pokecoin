@@ -1,4 +1,5 @@
 class UserController < ApplicationController
+  before_action :authenticate_user!
   before_action :fetch_user
 
   def index

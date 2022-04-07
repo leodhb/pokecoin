@@ -1,4 +1,5 @@
 class PokemonController < ApplicationController
+  before_action :authenticate_user!, only: [:checkout, :buy, :sell]
   before_action :fetch_pokemon, only: [:show, :checkout, :sell, :buy]
   before_action :fetch_bitcoin_price, only: [:show, :checkout, :buy, :sell]
 
