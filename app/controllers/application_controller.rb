@@ -12,4 +12,12 @@ class ApplicationController < ActionController::Base
     def pokemon_from_logged_user?
         @pokemon.user.id == current_user.id
     end
+
+    before_action :configure_permitted_parameters, if: :devise_controller?
+
+    protected
+
+    def configure_permitted_parameters
+        devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:full_name, :email, :password)}
+    end
 end
