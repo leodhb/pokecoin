@@ -19,7 +19,7 @@ div.pokecard {
 }
 
 nav.navbar {
-    height: 6rem;
+    min-height: 6rem;
     z-index: 9999 !important;
 }
 section#header {
