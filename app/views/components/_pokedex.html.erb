@@ -1,6 +1,6 @@
 <div class="row <%= "scrolling-wrapper flex-row flex-nowrap" if home?%>">
     <% @pokemons.each do |pokemon| %>
-        <div class="<%= "col-xl-2" if home?%> col-lg-3">
+        <div class="<%= "col-xl-2" if home? %> col-lg-3">
             <a href="<%= pokemon_show_path(pokemon.id) %>">
                 <div class="card pokecard mb-4">
                     <img class="card-img-top" src="<%= pokemon.image %>" alt="<%= pokemon.name %>'s photo">
