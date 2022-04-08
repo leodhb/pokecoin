@@ -15,10 +15,10 @@
       </ul>
       <div class="d-flex py-auto">
         <% if user_signed_in? %>
-            <%= link_to "My Account", user_index_path %>
-            <%= button_to "Log out", destroy_user_session_path, :method=>'delete'%>
+            <%= link_to "My Account", user_index_path, class: "btn btn-outline-primary" %>
+            <%= button_to "Log out", destroy_user_session_path, :method=>'delete', class: "btn btn-outline-primary mx-2"%>
         <% else %>
-            <%= link_to "login", new_user_session_path %>
+            <%= link_to "login", new_user_session_path, class: "btn btn-outline-primary mx-2" %>
         <% end %>
       </div>
     </div>
