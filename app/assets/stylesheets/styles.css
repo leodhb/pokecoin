@@ -40,6 +40,7 @@ section#header {
     border: none !important;
     font-weight: bold !important;
     transition: .2s ease-in-out !important;
+    margin-top: 1rem;
 }
 
 .buy-btn:hover {
